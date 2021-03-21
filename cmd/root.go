@@ -8,6 +8,7 @@ import (
 	"io/fs"
 	"log"
 	"os"
+	"sort"
 
 	"github.com/aybabtme/uniplot/histogram"
 	"github.com/spf13/cobra"
@@ -36,6 +37,7 @@ func run(pkg string) error {
 		publicFunctions := 0
 		fileCount := 0
 		data := []float64{}
+		imports := make(map[string]bool)
 
 		for _, f := range pkg.Files {
 			fileCount++
@@ -47,6 +49,10 @@ func run(pkg string) error {
 				}
 			}
 			data = append(data, publicFuncsPerFile)
+
+			for _, i := range f.Imports {
+				imports[i.Path.Value] = true
+			}
 		}
 		hist := histogram.Hist(3, data)
 		err := histogram.Fprint(os.Stdout, hist, histogram.Linear(20))
@@ -55,10 +61,28 @@ func run(pkg string) error {
 		}
 
 		fmt.Printf("Package '%s' has %d exported function(s) across %d file(s)\n", pkg.Name, publicFunctions, fileCount)
+
+		i := alphabetical(toSlice(imports))
+		sort.Sort(i)
+		fmt.Println(i)
 	}
 
 	return nil
 }
+
+func toSlice(is map[string]bool) []string {
+	out := []string{}
+	for i := range is {
+		out = append(out, i)
+	}
+	return out
+}
+
+type alphabetical []string
+
+func (a alphabetical) Len() int           { return len(a) }
+func (a alphabetical) Swap(i, j int)      { a[i], a[j] = a[j], a[i] }
+func (a alphabetical) Less(i, j int) bool { return a[i] < a[j] }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
 // This is called by main.main(). It only needs to happen once to the rootCmd.
