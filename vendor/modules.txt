@@ -1,6 +1,11 @@
 # github.com/aybabtme/uniplot v0.0.0-20151203143629-039c559e5e7e
 ## explicit
 github.com/aybabtme/uniplot/histogram
+# github.com/google/go-github/v33 v33.0.0
+## explicit
+github.com/google/go-github/v33/github
+# github.com/google/go-querystring v1.0.0
+github.com/google/go-querystring/query
 # github.com/inconshreveable/mousetrap v1.0.0
 github.com/inconshreveable/mousetrap
 # github.com/spf13/cobra v1.1.3
@@ -8,3 +13,11 @@ github.com/inconshreveable/mousetrap
 github.com/spf13/cobra
 # github.com/spf13/pflag v1.0.5
 github.com/spf13/pflag
+# golang.org/x/crypto v0.0.0-20190605123033-f99c8df09eb5
+golang.org/x/crypto/cast5
+golang.org/x/crypto/openpgp
+golang.org/x/crypto/openpgp/armor
+golang.org/x/crypto/openpgp/elgamal
+golang.org/x/crypto/openpgp/errors
+golang.org/x/crypto/openpgp/packet
+golang.org/x/crypto/openpgp/s2k
